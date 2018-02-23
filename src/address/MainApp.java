@@ -1,11 +1,13 @@
 package address;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
+import address.model.HallOfResidence;
 import address.model.Room;
 import address.model.Student;
-import address.view.StudentEditDialogController;
-import address.view.StudentOverviewController;
+import address.view.HallOfResidenceEditDialogController;
+import address.view.HallOfResidenceOverviewController;
 import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -20,8 +22,8 @@ public class MainApp extends Application {
 
     private Stage primaryStage;
     private BorderPane rootLayout;
-    private ObservableList<Student> studentData = FXCollections.observableArrayList();
-   
+    private ObservableList<HallOfResidence> hallOfResidenceData = FXCollections.observableArrayList(); 
+    
     @Override
     public void start(Stage primaryStage) {
         this.primaryStage = primaryStage;
@@ -34,21 +36,14 @@ public class MainApp extends Application {
     
     public MainApp() {
     	
-    	Room room = new Room("Occupied", "Clean", "1600");
-        // Add some sample data
-        studentData.add(new Student("Hans", "Muster", room));
-        studentData.add(new Student("Ruth", "Mueller", room));
-        studentData.add(new Student("Heinz", "Kurz", room));
-        studentData.add(new Student("Cornelia", "Meier", room));
-        studentData.add(new Student("Werner", "Meyer", room));
-        studentData.add(new Student("Lydia", "Kunz", room));
-        studentData.add(new Student("Anna", "Best", room));
-        studentData.add(new Student("Stefan", "Meier", room));
-        studentData.add(new Student("Martin", "Mueller", room));
+    	hallOfResidenceData.addAll(new HallOfResidence("Walls Court", 1000, "25 ColdHarber Lane", "07557530287"),
+    			new HallOfResidence("Carrol Court", 200, "35 ColdHarber Lane", "0755743098"),
+    			new HallOfResidence("Student Village", 1000, "45 ColdHarber Lane", "07557589048"));
     }
     
-    public ObservableList<Student> getStudentData() {
-        return studentData;
+
+	public ObservableList<HallOfResidence> gethallOfResidenceData() {
+        return hallOfResidenceData;
     }
 
     /**
@@ -77,21 +72,21 @@ public class MainApp extends Application {
         try {
             // Load StudentOverview.
             FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(MainApp.class.getResource("view/StudentOverview.fxml"));
+            loader.setLocation(MainApp.class.getResource("view/HallOfResidenceOverview.fxml"));
             AnchorPane StudentOverview = (AnchorPane) loader.load();
 
             // Set person overview into the center of root layout.
             rootLayout.setCenter(StudentOverview);
         
             // Give the controller access to the main app.
-            StudentOverviewController controller = loader.getController();
+            HallOfResidenceOverviewController controller = loader.getController();
             controller.setMainApp(this);
 
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
-public boolean showStudentEditDialog(Student student) {
+public boolean showStudentEditDialog(HallOfResidence student) {
 	try {
         // Load the fxml file and create a new stage for the popup dialog.
         FXMLLoader loader = new FXMLLoader();
@@ -107,7 +102,7 @@ public boolean showStudentEditDialog(Student student) {
         dialogStage.setScene(scene);
 
         // Set the person into the controller
-        StudentEditDialogController controller = loader.getController();
+        HallOfResidenceEditDialogController controller = loader.getController();
         controller.setDialogStage(dialogStage);
         controller.setStudent(student);
 

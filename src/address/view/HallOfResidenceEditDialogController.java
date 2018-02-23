@@ -5,9 +5,10 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import address.model.HallOfResidence;
 import address.model.Student;
 
-public class StudentEditDialogController {
+public class HallOfResidenceEditDialogController {
 	@FXML
 	private TextField firstNameField;
 	
@@ -21,8 +22,10 @@ public class StudentEditDialogController {
 	private TextField leaseIDField;
 	
 	private Stage dialogStage;
-    private Student student;
+	
     private boolean okClicked = false;
+
+	private HallOfResidence hallOfResidence;
     
     @FXML
     private void initialize() {
@@ -32,12 +35,12 @@ public class StudentEditDialogController {
         this.dialogStage = dialogStage;
     }
     
-    public void setStudent(Student student) {
-    	this.student = student;
-    	firstNameField.setText(student.getFirstName());
-        lastNameField.setText(student.getLastName());
-        studentIDField.setText(student.getStudentID());
-        leaseIDField.setText(student.getLeaseID());
+    public void setStudent(HallOfResidence hallOfResidence) {
+    	this.hallOfResidence = hallOfResidence;
+    	firstNameField.setText(hallOfResidence.getAddress());
+       // lastNameField.setText(student.getLastName());
+        //studentIDField.setText(student.getStudentID());
+        //leaseIDField.setText(student.getLeaseID());
         
     }
     
@@ -48,8 +51,8 @@ public class StudentEditDialogController {
     @FXML
     private void handleOk() {
         if (isInputValid()) {
-            student.setFirstName(firstNameField.getText());
-            student.setLastName(lastNameField.getText());
+            //student.setFirstName(firstNameField.getText());
+           // student.setLastName(lastNameField.getText());
             
             okClicked = true;
             dialogStage.close();

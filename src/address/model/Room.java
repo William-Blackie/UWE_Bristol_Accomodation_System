@@ -1,59 +1,118 @@
 package address.model;
 
-import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.StringProperty;
 
 public class Room {
+
+	private StringProperty occupied;
+
+	private StringProperty cleaningStatus;
+
+	private StringProperty monthlyRate;
+
+	private IntegerProperty roomNumber;
+
+	/**
+	 * @param occupied
+	 * @param cleaningStatus
+	 * @param monthlyRate
+	 * @param roomNumber
+	 */
+	public Room(StringProperty occupied, StringProperty cleaningStatus, StringProperty monthlyRate,
+			IntegerProperty roomNumber) {
+		this.occupied = occupied;
+		this.cleaningStatus = cleaningStatus;
+		this.monthlyRate = monthlyRate;
+		this.roomNumber = roomNumber;
+	}
 	
-	
-	//Room info
-		private final StringProperty occupied; 
-		private final StringProperty cleaningStatus;
-	    private final StringProperty monthlyRate;
-	    
-public Room() {
-	this(null, null, null);
-}
-	    public Room(String occupied, String cleaningStatus, String monthlyRate) {
-	    	this.occupied = new SimpleStringProperty(occupied);
-	    	this.cleaningStatus = new SimpleStringProperty(cleaningStatus);
-	    	this.monthlyRate = new SimpleStringProperty(monthlyRate);
-		}
-	    
+	public Room() {
+		this(null, null, null, null);
+	}
+
+	/**
+	 * @return the occupied
+	 */
 	public String getOccupied() {
 		return occupied.get();
 	}
-
-	public void setOccupied(String occupied) {
-		this.occupied.set(occupied);
-	}
 	
-	public StringProperty OccupiedProperty() {
+	/**
+	 * @return the occupiedProperty
+	 */
+	public StringProperty occupiedProperty() {
 		return occupied;
 	}
 	
+	/**
+	 * @param occupied the occupied to set
+	 */
+	public void setOccupied(String occupied) {
+		this.occupied.set(occupied);
+	}
+
+	/**
+	 * @return the cleaningStatus
+	 */
 	public String getCleaningStatus() {
 		return cleaningStatus.get();
 	}
-
-	public void setCleaningStatus(String cleaningStatus) {
-		this.cleaningStatus.set(cleaningStatus);
-	}
 	
+	/**
+	 * @return the cleaningStatusProperty
+	 */
 	public StringProperty cleaningStatusProperty() {
 		return cleaningStatus;
 	}
-	
+
+	/**
+	 * @param cleaningStatus the cleaningStatus to set
+	 */
+	public void setCleaningStatus(String cleaningStatus) {
+		this.cleaningStatus.set(cleaningStatus);
+	}
+
+	/**
+	 * @return the monthlyRate
+	 */
 	public String getMonthlyRate() {
 		return monthlyRate.get();
 	}
+	
+	/**
+	 * @return the monthlyRateProperty
+	 */
+	public StringProperty monthlyRateProperty() {
+		return monthlyRate;
+	}
 
+	/**
+	 * @param monthlyRate the monthlyRate to set
+	 */
 	public void setMonthlyRate(String monthlyRate) {
 		this.monthlyRate.set(monthlyRate);
 	}
+
+	/**
+	 * @return the roomNumber
+	 */
+	public int getRoomNumber() {
+		return roomNumber.get();
+	}
 	
-	public StringProperty monthlyRateProperty() {
-		return monthlyRate;
+	/**
+	 * @return the roomNumberProperty
+	 */
+	public IntegerProperty roomNumberProperty() {
+		return roomNumber;
+	}
+
+	/**
+	 * @param roomNumber the roomNumber to set
+	 */
+	public void setRoomNumber(int roomNumber) {
+		this.roomNumber.set(roomNumber);
 	}
 
 }

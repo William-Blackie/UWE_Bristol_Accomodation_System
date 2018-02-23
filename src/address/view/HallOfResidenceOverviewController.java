@@ -7,9 +7,10 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import address.MainApp;
+import address.model.HallOfResidence;
 import address.model.Student;
 
-public class StudentOverviewController {
+public class HallOfResidenceOverviewController {
 	@FXML
     private TableView<Student> studentTable;
     @FXML
@@ -27,8 +28,6 @@ public class StudentOverviewController {
     private Label studentIDLabel;
     @FXML
     private Label leaseIDLable;
-    @FXML
-    private Label birthdayLabel;
     
     //Room info
     @FXML
@@ -42,17 +41,17 @@ public class StudentOverviewController {
 	private MainApp mainApp;
     
     @FXML
-    private void showStudentDetails(Student student) {
+    private void showStudentDetails(HallOfResidence student) {
     	if (student != null) {
-    		firstNameLabel.setText(student.getFirstName());
-    		lastNameLabel.setText(student.getLastName());
-    		studentIDLabel.setText(student.getLeaseID());
-    		leaseIDLable.setText(student.getLeaseID());
+    		firstNameLabel.setText("");
+    		lastNameLabel.setText("");
+    		studentIDLabel.setText("");
+    		leaseIDLable.setText("");
     		
     		//Room
-    		cleaningStatusLabel.setText(student.room.getCleaningStatus());
-    		occupiedLabel.setText(student.room.getOccupied());
-    		monthlyRateLabel.setText(student.room.getMonthlyRate());
+    		cleaningStatusLabel.setText("");
+    		occupiedLabel.setText("");
+    		monthlyRateLabel.setText("");
     		
     		//birthdayLabel.setText(student.getBirthday());
     	}
@@ -70,7 +69,7 @@ public class StudentOverviewController {
     }
     
     
-    public StudentOverviewController() {
+    public HallOfResidenceOverviewController() {
     }
     
     @FXML
