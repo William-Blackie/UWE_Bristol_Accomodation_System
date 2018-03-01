@@ -7,6 +7,7 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.stage.Window;
 import address.MainApp;
 import address.model.HallOfResidence;
 import address.model.Student;
@@ -62,7 +63,7 @@ public class HallOfResidenceOverviewController {
 	private Label wardenNameLabel;
 	
 	@FXML
-	private ComboBox<String> hallOfResidenceComboBox = new ComboBox<String>();
+	public ComboBox<String> hallOfResidenceComboBox = new ComboBox<String>();
 
 	private MainApp mainApp;
 
@@ -86,16 +87,22 @@ public class HallOfResidenceOverviewController {
 
 		hallOfResidenceComboBox.getItems().removeAll(hallOfResidenceComboBox.getItems());
 		hallOfResidenceComboBox.getItems().addAll("Student Village", "Carroll Court", "Wallscourt Park");
-		hallOfResidenceComboBox.getSelectionModel().select("Student Village");
+	}
 	
+	public String getHallSelection() {
+		return hallOfResidenceComboBox.getValue();
+	}
+	
+	public void setHall(HallOfResidence hall) {
+		this.hall = hall;
 	}
 
 	public void setMainApp(MainApp mainApp) {
 		this.mainApp = mainApp;
 
-		hall = mainApp.getHallOfResidence();
-
-		studentTable.setItems(mainApp.getHallOfResidence().studentList);
+		//hall = mainApp.getHallOfResidence();
+		
+		studentTable.setItems(hall.studentList);
 	}
 
 	private void showHallOfResidenceDetails(Student student) {
@@ -148,6 +155,21 @@ public class HallOfResidenceOverviewController {
 		}
 	}
 
+	@FXML
+	private void handleHallSelect() {
+			mainApp.setHallNameString(getHallSelection());
+			mainApp.showHallOfResidenceOverview();
+			System.out.print("Something");
+			
+			Alert alert = new Alert(AlertType.ERROR);
+			Window dialogStage;
+			alert.setTitle("Invalid fields or user priviliges");
+			alert.setHeaderText(hallOfResidenceComboBox.getValue());
+			alert.setContentText("TEST");
+
+			alert.showAndWait();
+	}
+	
 	@FXML
 	private void deleteStudent() {
 		int studentIndex = studentTable.getSelectionModel().getSelectedIndex();
