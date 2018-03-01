@@ -1,6 +1,5 @@
 package address;
 
-import java.awt.List;
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -15,8 +14,6 @@ import address.view.LeaseEditDialogController;
 import address.view.RoomEditDialogController;
 import address.view.StudentEditDialogController;
 import javafx.application.Application;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
@@ -32,7 +29,7 @@ public class MainApp extends Application {
 	private String tempHallName;
 	public HallOfResidence currentHall;
 
-	HallManager hallManager = new HallManager("Jhon Smith", "ps1");
+	HallManager hallManager = new HallManager("Jhon Smith", "ps1"); // Create HallManager and initalize HallsOfResidence
 
 	HallOfResidence hall1 = new HallOfResidence("Student Village", 1, 400, "307 Coldharbour Ln", "0744839872",
 			new Warden("James Doe", "password1"));
@@ -45,7 +42,7 @@ public class MainApp extends Application {
 
 	public MainApp() {
 		
-		hallArray.add(hall1);
+		hallArray.add(hall1); //Create hallArray, intilize halls and add dummy data
 		hallArray.add(hall2);
 		hallArray.add(hall3);
 		
@@ -66,17 +63,26 @@ public class MainApp extends Application {
 		initHallOfResidence(hall3);
 	}
 	
-	public void initHallOfResidence(HallOfResidence hall) {
+	/**
+	 * @param hall
+	 */
+	public void initHallOfResidence(HallOfResidence hall) { // Create "default" cases for the hall
 		while (hall.studentList.size() < hall.getTotalRooms()) {
 			hall.studentList.add(new Student("", "", new Room("Unoccupied", "Clean", 0, Integer.valueOf(String.valueOf(hall.getHallNumber()) + String.valueOf(hall.studentList.size()))),
 					new Lease(), ""));
 		}
 	}
 
+	/**
+	 * @return
+	 */
 	public HallManager getHallManager() {
 		return hallManager;
 	}
 
+	/**
+ 	 * @param primaryStage
+	 */
 	@Override
 	public void start(Stage primaryStage) {
 		this.primaryStage = primaryStage;
@@ -87,22 +93,37 @@ public class MainApp extends Application {
 		showHallOfResidenceOverview();
 	}
 	
+	/**
+	 * @param hallName
+	 */
 	public void setHallNameString(String hallName) {
 		this.tempHallName = hallName;
 	}
 	
+	/**
+	 * @return
+	 */
 	public String getHallNameString() {
 		return tempHallName;
 	}
 	
+	/**
+	 * @param hall
+	 */
 	public void setCurrentHall(HallOfResidence hall) {
 		this.currentHall = hall;
 	}
 	
+	/**
+	 * @return
+	 */
 	public HallOfResidence getCurrentHal() {
 		return currentHall;
 	}
-	public int getTotalRooms() {
+	/**
+	 * @return
+	 */
+	public int getTotalRooms() { // total rooms from all HallsOfRecidence
 		int totalRoom = 0;
 		for(HallOfResidence hall: hallArray) {
 			totalRoom += hall.studentList.size();
@@ -110,7 +131,10 @@ public class MainApp extends Application {
 		return totalRoom;
 	}
 	
-	public int getTotalEmptyRooms() {
+	/**
+	 * @return
+	 */
+	public int getTotalEmptyRooms() { // Total empty rooms from all hallsOfRecidence
 		int emptyRooms = 0;
 		int listSize = 0;
 		for(HallOfResidence hall: hallArray) {
@@ -125,8 +149,9 @@ public class MainApp extends Application {
 		return (getTotalRooms() - emptyRooms);
 	}
 
+
 	/**
-	 * Initializes the root layout.
+	 * 
 	 */
 	public void initRootLayout() {
 		try {
@@ -135,7 +160,7 @@ public class MainApp extends Application {
 			loader.setLocation(MainApp.class.getResource("view/RootLayout.fxml"));
 			rootLayout = (BorderPane) loader.load();
 
-			// Show the scene containing the root layout.
+			// Show the root layout.
 			Scene scene = new Scene(rootLayout);
 			primaryStage.setScene(scene);
 			primaryStage.show();
@@ -144,23 +169,24 @@ public class MainApp extends Application {
 		}
 	}
 
+
 	/**
-	 * Shows the person overview inside the root layout.
+	 * 
 	 */
 	public void showHallOfResidenceOverview() {
 		try {
 			boolean isAHall = false;
-			// Load person overview.
+			// Load HallOfResidence overview.
 			FXMLLoader loader = new FXMLLoader();
 			loader.setLocation(MainApp.class.getResource("view/HallOfResidenceOverview.fxml"));
 			AnchorPane HallOfResidenceOverview = (AnchorPane) loader.load();
 
-			// Set person overview into the center of root layout.
+			// Set HallOfResidence overview into the centre of root layout.
 			rootLayout.setCenter(HallOfResidenceOverview);
 
 			HallOfResidenceOverviewController controller = loader.getController();
 			
-			for(HallOfResidence hall : hallArray) {
+			for(HallOfResidence hall : hallArray) { // Find current HallOfResidence
 				if(getHallNameString() == hall.getName()) {
 					controller.setHall(hall);
 					isAHall = true;
@@ -171,7 +197,7 @@ public class MainApp extends Application {
 				controller.setHall(hall1);
 				setCurrentHall(hall1);
 			}
-			controller.setRoomData(getTotalRooms(), getTotalEmptyRooms());
+			controller.setRoomData(getTotalRooms(), getTotalEmptyRooms()); // Pass values for Labels
 			controller.setMainApp(this);
 
 		} catch (IOException e) {
@@ -179,8 +205,13 @@ public class MainApp extends Application {
 		}
 	}
 
+	/**
+	 * @param student
+	 * @return
+	 */
 	public boolean showStudentEditDialog(Student student) {
 		try {
+			// Load Student editor
 			FXMLLoader loader = new FXMLLoader();
 			loader.setLocation(MainApp.class.getResource("view/StudentEditDialog.fxml"));
 			AnchorPane page = (AnchorPane) loader.load();
@@ -193,7 +224,7 @@ public class MainApp extends Application {
 			Scene scene = new Scene(page);
 			dialogStage.setScene(scene);
 
-			// Set the person into the controller.
+			// Set the Student into the controller.
 			StudentEditDialogController controller = loader.getController();
 			controller.setDialogStage(dialogStage);
 			controller.getStudent(student);
@@ -209,8 +240,13 @@ public class MainApp extends Application {
 		}
 	}
 
+	/**
+	 * @param student
+	 * @return
+	 */
 	public boolean showRoomEditDialog(Student student) {
 		try {
+			// Load Room editor
 			FXMLLoader loader = new FXMLLoader();
 			loader.setLocation(MainApp.class.getResource("view/RoomEditDialog.fxml"));
 			AnchorPane page = (AnchorPane) loader.load();
@@ -240,8 +276,13 @@ public class MainApp extends Application {
 		}
 	}
 
+	/**
+	 * @param student
+	 * @return
+	 */
 	public boolean showLeaseEditDialog(Student student) {
 		try {
+			// Load Lease editor.
 			FXMLLoader loader = new FXMLLoader();
 			loader.setLocation(MainApp.class.getResource("view/LeaseEditDialog.fxml"));
 			AnchorPane page = (AnchorPane) loader.load();
@@ -254,11 +295,11 @@ public class MainApp extends Application {
 			Scene scene = new Scene(page);
 			dialogStage.setScene(scene);
 			
-			//initialise lease
-			//c tempString = getCurrentHal().getName().charAt(0);
+			//initialise lease data
 			student.lease.setHallAdress(getCurrentHal().getAddress());
 			student.lease.setLeaseID( String.valueOf(getCurrentHal().getName().charAt(0)) + student.getStudentID());
-			// Set the person into the controller.
+			
+			// Set the Student into the controller.
 			LeaseEditDialogController controller = loader.getController();
 			controller.setDialogStage(dialogStage);
 			controller.getStudent(student);
@@ -274,9 +315,8 @@ public class MainApp extends Application {
 		}
 	}
 
+
 	/**
-	 * Returns the main stage.
-	 * 
 	 * @return
 	 */
 	public Stage getPrimaryStage() {

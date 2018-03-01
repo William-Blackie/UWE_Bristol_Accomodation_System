@@ -1,7 +1,6 @@
 package address.view;
 
 import address.model.HallManager;
-import address.model.HallOfResidence;
 import address.model.Student;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
@@ -29,14 +28,23 @@ public class StudentEditDialogController {
 	@FXML
 	private PasswordField hallManagerPasswordField;
 
+	/**
+	 * 
+	 */
 	@FXML
 	private void initialize() {
 	}
 
+	/**
+	 * @param dialogStage
+	 */
 	public void setDialogStage(Stage dialogStage) {
 		this.dialogStage = dialogStage;
 	}
 
+	/**
+	 * @param student
+	 */
 	public void getStudent(Student student) {
 		this.student = student;
 
@@ -48,16 +56,25 @@ public class StudentEditDialogController {
 		dialogStage.close();
 	}
 
+	/**
+	 * @param hallManager
+	 */
 	public void getHallManager(HallManager hallManager) {
 		this.hallManager = hallManager;
 	}
 
+	/**
+	 * @return
+	 */
 	@FXML
 	public boolean isOkClicked() {
 		return okClicked;
 	}
 
-	private boolean isInputValid() {
+	/**
+	 * @return
+	 */
+	private boolean isInputValid() {// Validate user input and Password
 
 		String errorMessage = "";
 
@@ -96,11 +113,17 @@ public class StudentEditDialogController {
 		}
 	}
 
+	/**
+	 * 
+	 */
 	@FXML
 	private void handleCancel() {
 		dialogStage.close();
 	}
 
+	/**
+	 * 
+	 */
 	@FXML
 	private void handleOk() {
 		if (isInputValid()) {
@@ -114,6 +137,9 @@ public class StudentEditDialogController {
 		}
 	}
 
+	/**
+	 * 
+	 */
 	@FXML
 	private void handleDelete() {
 		firstNameField.setText("");

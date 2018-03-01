@@ -36,18 +36,25 @@ public class LeaseEditDialogController {
 	@FXML
 	private PasswordField passwordField;
 
+	/**
+	 * 
+	 */
 	@FXML
 	private void initialize() {
 	}
 	
+	/**
+	 * @param student
+	 */
 	public void getStudent(Student student) {
 		this.student = student;
 		
-		//student.lease.setLeaseID();
+		// Initialize some values for the lease
 		student.lease.setFirstName(student.getFirstName());
 		student.lease.setLastName(student.getLastName());
 		student.lease.setStudentRoomNumber(student.room.getRoomNumber());
 		
+		// set Label values
 		leaseIDLabel.setText(student.lease.getLeaseID());
 		rentalDurationField.setText(Integer.toString(student.lease.getDurationInMonths()));
 		hallAddressLabel.setText(student.lease.getHallAdress());
@@ -60,20 +67,32 @@ public class LeaseEditDialogController {
 		dialogStage.close();
 	}
 
+	/**
+	 * @param hallManager
+	 */
 	public void getHallManager(HallManager hallManager) {
 		this.hallManager = hallManager;
 	}
 
+	/**
+	 * @param hallOfResidence
+	 */
 	public void getHallOfResidence(HallOfResidence hallOfResidence) {
 		this.hallOfResidence = hallOfResidence;
 	}
 
+	/**
+	 * @return
+	 */
 	@FXML
 	public boolean isOkClicked() {
 		return okClicked;
 	}
 
-	private boolean isInputValid() {
+	/**
+	 * @return
+	 */
+	private boolean isInputValid() { // Validate user input & password for user permissions
 
 		String errorMessage = "";
 
@@ -91,8 +110,8 @@ public class LeaseEditDialogController {
 
 		if (errorMessage.length() == 0) {
 			return true;
-		} else {
-			// Show the error message.
+		} 
+		else {// Show Error Pop-up
 			Alert alert = new Alert(AlertType.ERROR);
 			alert.initOwner(dialogStage);
 			alert.setTitle("Invalid field");
@@ -100,31 +119,47 @@ public class LeaseEditDialogController {
 			alert.setContentText(errorMessage);
 
 			alert.showAndWait();
-
 			return false;
 		}
 	}
 
+	/**
+	 * 
+	 */
 	@FXML
 	private void handleCancel() {
 		dialogStage.close();
 	}
 
+	/**
+	 * 
+	 */
 	@FXML
-	private void handleOk() {
-		if (isInputValid()) {
+	private void handleOk() { 
+		if (isInputValid()) {// Set Lease Data
 			student.lease.setDurationInMonths(Integer.valueOf(rentalDurationField.getText()));
+			student.lease.setFirstName(student.getFirstName());
+			student.lease.setLastName(student.getLastName());
+			student.lease.setStudentRoomNumber(student.room.getRoomNumber());
+			student.lease.setHallAdress(hallAddressLabel.getText());
+			student.lease.setStudentRoomNumber(Integer.valueOf((roomNumberLabel.getText())));
 			okClicked = true;
 			dialogStage.close();
 
 		}
 	}
 
+	/**
+	 * 
+	 */
 	@FXML
 	private void handleDelete() {
 		delClicked = true;
 	}
 
+	/**
+	 * @param dialogStage
+	 */
 	public void setDialogStage(Stage dialogStage) {
 		this.dialogStage = dialogStage;
 	}

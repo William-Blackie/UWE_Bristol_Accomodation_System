@@ -7,11 +7,9 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
-import javafx.stage.Window;
 import address.MainApp;
 import address.model.HallOfResidence;
 import address.model.Student;
-import address.model.Warden;
 
 public class HallOfResidenceOverviewController {
 	@FXML
@@ -62,32 +60,37 @@ public class HallOfResidenceOverviewController {
 	// Warden
 	@FXML
 	private Label wardenNameLabel;
-	
-	//Accomodation Office
+
+	// Accommodation Office
 	@FXML
 	private Label totalRoomLabel;
-	@FXML 
+	@FXML
 	private Label totalEmptyRoomsLabel;
-	
+
 	@FXML
 	public ComboBox<String> hallOfResidenceComboBox = new ComboBox<String>();
 
 	private MainApp mainApp;
 
 	private HallOfResidence hall;
-	
-	private int totalRooms = 0;
-	
-	private int totalEmptyRooms = 0;
-	
 
+	private int totalRooms = 0;
+
+	private int totalEmptyRooms = 0;
+
+	/**
+	 * 
+	 */
 	public HallOfResidenceOverviewController() {
 
 	}
 
+	/**
+	 * 
+	 */
 	@FXML
 	private void initialize() {
-		// Initialize the person table with the two columns.
+		// Initialize the Student TableView with the three columns.
 		firstNameColumn.setCellValueFactory(cellData -> cellData.getValue().firstNameProperty());
 		lastNameColumn.setCellValueFactory(cellData -> cellData.getValue().lastNameProperty());
 		roomNumberColumn.setCellValueFactory(cellData -> cellData.getValue().room.roomNumberProperty());
@@ -97,31 +100,48 @@ public class HallOfResidenceOverviewController {
 		studentTable.getSelectionModel().selectedItemProperty()
 				.addListener((observable, oldValue, newValue) -> showHallOfResidenceDetails(newValue));
 
+		// Initialize HallsOfResidence in ComboBox
 		hallOfResidenceComboBox.getItems().removeAll(hallOfResidenceComboBox.getItems());
 		hallOfResidenceComboBox.getItems().addAll("Student Village", "Carroll Court", "Wallscourt Park");
 	}
-	
+
+	/**
+	 * @return HallOfResidence Name
+	 */
 	public String getHallSelection() {
 		return hallOfResidenceComboBox.getValue();
 	}
-	
+
+	/**
+	 * @param hall
+	 */
 	public void setHall(HallOfResidence hall) {
 		this.hall = hall;
 	}
 
+	/**
+	 * @param mainApp
+	 */
 	public void setMainApp(MainApp mainApp) {
 		this.mainApp = mainApp;
-		
+
 		studentTable.setItems(hall.studentList);
 	}
-	
+
+	/**
+	 * @param totalRooms
+	 * @param totalEmptyRooms
+	 */
 	public void setRoomData(int totalRooms, int totalEmptyRooms) {
 		this.totalEmptyRooms = totalEmptyRooms;
 		this.totalRooms = totalRooms;
 	}
 
+	/**
+	 * @param student
+	 */
 	private void showHallOfResidenceDetails(Student student) {
-		if (student != null) {
+		if (student != null) { // Populate Student & HallOfResidence data into GridPane Labels
 			// Student Info
 			firstNameLabel.setText(student.getFirstName());
 			lastNameLabel.setText(student.getLastName());
@@ -144,12 +164,12 @@ public class HallOfResidenceOverviewController {
 
 			// Warden
 			wardenNameLabel.setText(hall.warden.getName());
-			
-			//Accommodation Office
+
+			// Accommodation Office
 			totalEmptyRoomsLabel.setText(Integer.toString(totalEmptyRooms));
 			totalRoomLabel.setText(Integer.toString(totalRooms));
 
-		} else {
+		} else { // No selection set blank
 			firstNameLabel.setText("");
 			lastNameLabel.setText("");
 			studentIDLabel.setText("");
@@ -171,37 +191,27 @@ public class HallOfResidenceOverviewController {
 
 			// Warden
 			wardenNameLabel.setText("");
-			
-			//Accommodation Office
+
+			// Accommodation Office
 			totalEmptyRoomsLabel.setText("");
 			totalRoomLabel.setText("");
 		}
 	}
 
+	/**
+	 * 
+	 */
 	@FXML
-	private void handleHallSelect() {
-			mainApp.setHallNameString(getHallSelection());
-			mainApp.showHallOfResidenceOverview();
-	}
-	
-	@FXML
-	private void deleteStudent() {
-		int studentIndex = studentTable.getSelectionModel().getSelectedIndex();
-		if (studentIndex >= 0) {
-			studentTable.getItems().remove(studentIndex);
-		} else {
-			Alert alert = new Alert(AlertType.WARNING);
-			alert.initOwner(mainApp.getPrimaryStage());
-			alert.setTitle("Nothing selected");
-			alert.setHeaderText("No Student selected");
-			alert.setContentText("Please select a student in the table.");
-
-			alert.showAndWait();
-		}
+	private void handleHallSelect() {// Force HallsOfRecidenceOverview to update
+		mainApp.setHallNameString(getHallSelection());
+		mainApp.showHallOfResidenceOverview();
 	}
 
+	/**
+	 * 
+	 */
 	@FXML
-	private void handleEditPerson() {
+	private void handleEditStudent() { //Edit Student or throw warning
 		Student selectedStudent = studentTable.getSelectionModel().getSelectedItem();
 		if (selectedStudent != null) {
 			boolean okClicked = mainApp.showStudentEditDialog(selectedStudent);
@@ -210,19 +220,21 @@ public class HallOfResidenceOverviewController {
 			}
 
 		} else {
-			// Nothing selected.
 			Alert alert = new Alert(AlertType.WARNING);
 			alert.initOwner(mainApp.getPrimaryStage());
 			alert.setTitle("No Selection");
-			alert.setHeaderText("No Person Selected");
-			alert.setContentText("Please select a person in the table.");
-
+			alert.setHeaderText("No Student Selected");
+			alert.setContentText("Please select a Student in the TableView.");
+			
 			alert.showAndWait();
 		}
 	}
 
+	/**
+	 * 
+	 */
 	@FXML
-	private void handleEditRoom() {
+	private void handleEditRoom() { //Edit Room or throw warning
 		Student selectedStudent = studentTable.getSelectionModel().getSelectedItem();
 		if (selectedStudent != null) {
 			boolean okClicked = mainApp.showRoomEditDialog(selectedStudent);
@@ -231,19 +243,21 @@ public class HallOfResidenceOverviewController {
 			}
 
 		} else {
-			// Nothing selected.
 			Alert alert = new Alert(AlertType.WARNING);
 			alert.initOwner(mainApp.getPrimaryStage());
 			alert.setTitle("No Selection");
-			alert.setHeaderText("No Person Selected");
-			alert.setContentText("Please select a person in the table.");
-
+			alert.setHeaderText("No Student Selected");
+			alert.setContentText("Please select a Student in the TableView.");
+			
 			alert.showAndWait();
 		}
 	}
 
+	/**
+	 * 
+	 */
 	@FXML
-	private void handleEditLease() {
+	private void handleEditLease() { // Edit Lease or throw warning
 		Student selectedStudent = studentTable.getSelectionModel().getSelectedItem();
 		if (selectedStudent != null) {
 			boolean okClicked = mainApp.showLeaseEditDialog(selectedStudent);
@@ -256,9 +270,9 @@ public class HallOfResidenceOverviewController {
 			Alert alert = new Alert(AlertType.WARNING);
 			alert.initOwner(mainApp.getPrimaryStage());
 			alert.setTitle("No Selection");
-			alert.setHeaderText("No Person Selected");
-			alert.setContentText("Please select a person in the table.");
-
+			alert.setHeaderText("No Student Selected");
+			alert.setContentText("Please select a Student in the TableView.");
+			
 			alert.showAndWait();
 		}
 	}

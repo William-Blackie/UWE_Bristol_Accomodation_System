@@ -24,6 +24,11 @@ public class Lease {
 	/**
 	 * @param leaseID
 	 * @param durationInMonths
+	 * @param hallAddress
+	 * @param studentRoomNumber
+	 * @param firstName
+	 * @param lastName
+	 * @param studentID
 	 */
 	public Lease(String leaseID, int durationInMonths, String hallAddress, int studentRoomNumber, String firstName, String lastName, String studentID) {
 		this.leaseID = new SimpleStringProperty(leaseID);
@@ -45,26 +50,12 @@ public class Lease {
 	public String getLeaseID() {
 		return leaseID.get();
 	}
-
-	/**
-	 * @return the leaseID
-	 */
-	public StringProperty leaseIDProperty() {
-		return leaseID;
-	}
 	
 	/**
 	 * @param leaseID the leaseID to set
 	 */
 	public void setLeaseID(String leaseID) {
 		this.leaseID.set(leaseID);
-	}
-
-	/**
-	 * @return the durationInMonthsProperty
-	 */
-	public IntegerProperty durationInMonthsProperty() {
-		return durationInMonths;
 	}
 	
 	/**

@@ -37,8 +37,11 @@ public class RoomEditDialogController {
 	@FXML
 	private PasswordField passwordField;
 
+	/**
+	 * 
+	 */
 	@FXML
-	private void initialize() {
+	private void initialize() {// Initalize ComboBoxes
 		roomOptionsComboBox.getItems().removeAll(roomOptionsComboBox.getItems());
 		roomOptionsComboBox.getItems().addAll("Occupied", "Unoccupied");
 
@@ -46,6 +49,9 @@ public class RoomEditDialogController {
 		cleaningComboBox.getItems().addAll("Clean", "Unclean", "Offline");
 	}
 
+	/**
+	 * @param student
+	 */
 	public void getStudent(Student student) {
 		this.student = student;
 
@@ -58,20 +64,32 @@ public class RoomEditDialogController {
 		dialogStage.close();
 	}
 
+	/**
+	 * @param hallManager
+	 */
 	public void getHallManager(HallManager hallManager) {
 		this.hallManager = hallManager;
 	}
 
+	/**
+	 * @param hallOfResidence
+	 */
 	public void getHallOfResidence(HallOfResidence hallOfResidence) {
 		this.hallOfResidence = hallOfResidence;
 	}
 
+	/**
+	 * @return
+	 */
 	@FXML
 	public boolean isOkClicked() {
 		return okClicked;
 	}
 
-	private boolean isInputValid() {
+	/**
+	 * @return
+	 */
+	private boolean isInputValid() { // Validate user input & password
 
 		String errorMessage = "";
 
@@ -106,8 +124,7 @@ public class RoomEditDialogController {
 
 		if (errorMessage.length() == 0) {
 			return true;
-		} else {
-			// Show the error message.
+		} else {// Show the error message.
 			Alert alert = new Alert(AlertType.ERROR);
 			alert.initOwner(dialogStage);
 			alert.setTitle("Invalid fields or user priviliges");
@@ -120,11 +137,17 @@ public class RoomEditDialogController {
 		}
 	}
 
+	/**
+	 * 
+	 */
 	@FXML
 	private void handleCancel() {
 		dialogStage.close();
 	}
 
+	/**
+	 * 
+	 */
 	@FXML
 	private void handleOk() {
 		if (isInputValid()) {
@@ -139,6 +162,9 @@ public class RoomEditDialogController {
 		}
 	}
 
+	/**
+	 * 
+	 */
 	@FXML
 	private void handleDelete() {
 		cleaningStausLabel.setText("");
@@ -148,6 +174,9 @@ public class RoomEditDialogController {
 		delClicked = true;
 	}
 
+	/**
+	 * @param dialogStage
+	 */
 	public void setDialogStage(Stage dialogStage) {
 		this.dialogStage = dialogStage;
 	}

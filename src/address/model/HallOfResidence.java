@@ -1,6 +1,5 @@
 package address.model;
 
-import java.util.ArrayList;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
@@ -11,13 +10,6 @@ import javafx.collections.ObservableList;
 public class HallOfResidence {
 
 	private StringProperty name;
-
-	/**
-	 * @param name
-	 * @param totalRooms
-	 * @param address
-	 * @param telephoneNumber
-	 */
 
 	private IntegerProperty hallNumber;
 
@@ -31,14 +23,14 @@ public class HallOfResidence {
 
 	public ObservableList<Student> studentList;
 
+
 	/**
 	 * @param name
+	 * @param hallNumber
 	 * @param totalRooms
 	 * @param address
 	 * @param telephoneNumber
-	 * @param studentList
 	 * @param warden
-	 * @param studentArray
 	 */
 	public HallOfResidence(String name, int hallNumber, int totalRooms, String address, String telephoneNumber,
 			Warden warden) {
@@ -55,12 +47,6 @@ public class HallOfResidence {
 		this(null, 0, 0, null, null, null);
 	}
 
-	/**
-	 * @return the name property
-	 */
-	public StringProperty nameProperty() {
-		return name;
-	}
 
 	/**
 	 * @return the name
@@ -85,13 +71,6 @@ public class HallOfResidence {
 	}
 
 	/**
-	 * @return the address addressProperty
-	 */
-	public StringProperty addressProperty() {
-		return address;
-	}
-
-	/**
 	 * @param address
 	 *            the address to set
 	 */
@@ -104,13 +83,6 @@ public class HallOfResidence {
 	 */
 	public String getTelephoneNumber() {
 		return telephoneNumber.get();
-	}
-
-	/**
-	 * @return the telephoneNumberProperty
-	 */
-	public StringProperty telephoneNumberProperty() {
-		return telephoneNumber;
 	}
 
 	/**
@@ -134,13 +106,6 @@ public class HallOfResidence {
 	 */
 	public void setWarden(Warden warden) {
 		this.warden = warden;
-	}
-
-	/**
-	 * @return the name property
-	 */
-	public IntegerProperty totalRoomsProperty() {
-		return totalRooms;
 	}
 
 	/**

@@ -9,28 +9,25 @@ public class HallManager {
 	private String password;
 
 	/**
-	 * 
-	 */
-	public HallManager(String name, String password) {
-		this.name = new SimpleStringProperty(name);
-		this.password = password;	}
-
-	/**
 	 * @param name
 	 * @param password
 	 */
+	public HallManager(String name, String password) {
+		this.name = new SimpleStringProperty(name);
+		this.password = password;
+	}
+
 	public HallManager() {
 		this(null, null);
-		// TODO Auto-generated constructor stub
 	}
-	
+
 	/**
 	 * @return the name
 	 */
 	public String getName() {
 		return name.get();
 	}
-	
+
 	/**
 	 * @return the nameProperty
 	 */
@@ -39,7 +36,8 @@ public class HallManager {
 	}
 
 	/**
-	 * @param name the name to set
+	 * @param name
+	 *            the name to set
 	 */
 	public void setName(String name) {
 		this.name.set(name);
@@ -53,11 +51,11 @@ public class HallManager {
 	}
 
 	/**
-	 * @param password the password to set
+	 * @param password
+	 *            the password to set
 	 */
 	public void setPassword(String password) {
 		this.password = password;
 	}
 
 }
-
