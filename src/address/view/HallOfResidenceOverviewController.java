@@ -11,6 +11,7 @@ import javafx.stage.Window;
 import address.MainApp;
 import address.model.HallOfResidence;
 import address.model.Student;
+import address.model.Warden;
 
 public class HallOfResidenceOverviewController {
 	@FXML
@@ -62,12 +63,23 @@ public class HallOfResidenceOverviewController {
 	@FXML
 	private Label wardenNameLabel;
 	
+	//Accomodation Office
+	@FXML
+	private Label totalRoomLabel;
+	@FXML 
+	private Label totalEmptyRoomsLabel;
+	
 	@FXML
 	public ComboBox<String> hallOfResidenceComboBox = new ComboBox<String>();
 
 	private MainApp mainApp;
 
 	private HallOfResidence hall;
+	
+	private int totalRooms = 0;
+	
+	private int totalEmptyRooms = 0;
+	
 
 	public HallOfResidenceOverviewController() {
 
@@ -99,10 +111,13 @@ public class HallOfResidenceOverviewController {
 
 	public void setMainApp(MainApp mainApp) {
 		this.mainApp = mainApp;
-
-		//hall = mainApp.getHallOfResidence();
 		
 		studentTable.setItems(hall.studentList);
+	}
+	
+	public void setRoomData(int totalRooms, int totalEmptyRooms) {
+		this.totalEmptyRooms = totalEmptyRooms;
+		this.totalRooms = totalRooms;
 	}
 
 	private void showHallOfResidenceDetails(Student student) {
@@ -129,6 +144,10 @@ public class HallOfResidenceOverviewController {
 
 			// Warden
 			wardenNameLabel.setText(hall.warden.getName());
+			
+			//Accommodation Office
+			totalEmptyRoomsLabel.setText(Integer.toString(totalEmptyRooms));
+			totalRoomLabel.setText(Integer.toString(totalRooms));
 
 		} else {
 			firstNameLabel.setText("");
@@ -152,6 +171,10 @@ public class HallOfResidenceOverviewController {
 
 			// Warden
 			wardenNameLabel.setText("");
+			
+			//Accommodation Office
+			totalEmptyRoomsLabel.setText("");
+			totalRoomLabel.setText("");
 		}
 	}
 
@@ -159,15 +182,6 @@ public class HallOfResidenceOverviewController {
 	private void handleHallSelect() {
 			mainApp.setHallNameString(getHallSelection());
 			mainApp.showHallOfResidenceOverview();
-			System.out.print("Something");
-			
-			Alert alert = new Alert(AlertType.ERROR);
-			Window dialogStage;
-			alert.setTitle("Invalid fields or user priviliges");
-			alert.setHeaderText(hallOfResidenceComboBox.getValue());
-			alert.setContentText("TEST");
-
-			alert.showAndWait();
 	}
 	
 	@FXML

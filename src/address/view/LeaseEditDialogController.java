@@ -39,10 +39,15 @@ public class LeaseEditDialogController {
 	@FXML
 	private void initialize() {
 	}
-
+	
 	public void getStudent(Student student) {
 		this.student = student;
-
+		
+		//student.lease.setLeaseID();
+		student.lease.setFirstName(student.getFirstName());
+		student.lease.setLastName(student.getLastName());
+		student.lease.setStudentRoomNumber(student.room.getRoomNumber());
+		
 		leaseIDLabel.setText(student.lease.getLeaseID());
 		rentalDurationField.setText(Integer.toString(student.lease.getDurationInMonths()));
 		hallAddressLabel.setText(student.lease.getHallAdress());

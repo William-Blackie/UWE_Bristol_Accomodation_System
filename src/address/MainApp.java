@@ -12,6 +12,7 @@ import address.model.Student;
 import address.model.Warden;
 import address.view.HallOfResidenceOverviewController;
 import address.view.LeaseEditDialogController;
+import address.view.RoomEditDialogController;
 import address.view.StudentEditDialogController;
 import javafx.application.Application;
 import javafx.collections.FXCollections;
@@ -29,6 +30,7 @@ public class MainApp extends Application {
 	private BorderPane rootLayout;
 	public ArrayList<HallOfResidence> hallArray = new ArrayList<HallOfResidence>();
 	private String tempHallName;
+	public HallOfResidence currentHall;
 
 	HallManager hallManager = new HallManager("Jhon Smith", "ps1");
 
@@ -52,7 +54,11 @@ public class MainApp extends Application {
 				new Student("", "", new Room("Unoccupied", "Unclean", 400, 13), new Lease(), ""));
 		
 		hall2.studentList.addAll(new Student("Dylan", "Conway", new Room("Occupied", "Clean", 100, 21),new Lease("C17011376", 12, "35 coldharber Lane", 21, "Dylan", "Conway", "C17011376"), "17011376"),
-				new Student("Joseph", "Blackie", new Room("Occupied", "Clean", 760, 12),new Lease("S16011053", 12, "35 coldharber Lane", 12, "Joseph", "Blackie", "16011053"),"16011053"),
+				new Student("Finley", "Lord", new Room("Occupied", "Clean", 1110, 22),new Lease("C170125385", 12, "35 coldharber Lane", 22, "Finley", "Lord", "C170125385"),"170125385"),
+				new Student("", "", new Room("Unoccupied", "Unclean", 400, 13), new Lease(), ""));
+		
+		hall3.studentList.addAll(new Student("Dylan", "Conway", new Room("Occupied", "Clean", 100, 21),new Lease("C17011376", 12, "35 coldharber Lane", 21, "Dylan", "Conway", "C17011376"), "17011376"),
+				new Student("Finley", "Lord", new Room("Occupied", "Clean", 1110, 22),new Lease("C170125385", 12, "35 coldharber Lane", 22, "Finley", "Lord", "C170125385"),"170125385"),
 				new Student("", "", new Room("Unoccupied", "Unclean", 400, 13), new Lease(), ""));
 		
 		initHallOfResidence(hall1);
@@ -87,6 +93,36 @@ public class MainApp extends Application {
 	
 	public String getHallNameString() {
 		return tempHallName;
+	}
+	
+	public void setCurrentHall(HallOfResidence hall) {
+		this.currentHall = hall;
+	}
+	
+	public HallOfResidence getCurrentHal() {
+		return currentHall;
+	}
+	public int getTotalRooms() {
+		int totalRoom = 0;
+		for(HallOfResidence hall: hallArray) {
+			totalRoom += hall.studentList.size();
+		}
+		return totalRoom;
+	}
+	
+	public int getTotalEmptyRooms() {
+		int emptyRooms = 0;
+		int listSize = 0;
+		for(HallOfResidence hall: hallArray) {
+			listSize = hall.studentList.size();
+			for(int i = 0; i < listSize; i++) {
+				Student tempStudent = hall.studentList.get(i);
+				if(tempStudent.room.getOccupied().equals("Unoccupied")) {
+					emptyRooms += 1;
+				}
+			}
+		}
+		return (getTotalRooms() - emptyRooms);
 	}
 
 	/**
@@ -128,11 +164,14 @@ public class MainApp extends Application {
 				if(getHallNameString() == hall.getName()) {
 					controller.setHall(hall);
 					isAHall = true;
+					setCurrentHall(hall);
 				}
 				}
 			if(isAHall == false) {
 				controller.setHall(hall1);
+				setCurrentHall(hall1);
 			}
+			controller.setRoomData(getTotalRooms(), getTotalEmptyRooms());
 			controller.setMainApp(this);
 
 		} catch (IOException e) {
@@ -185,11 +224,11 @@ public class MainApp extends Application {
 			dialogStage.setScene(scene);
 
 			// Set the Student into the controller.
-			LeaseEditDialogController controller = loader.getController();
+			RoomEditDialogController controller = loader.getController();
 			controller.setDialogStage(dialogStage);
 			controller.getStudent(student);
 			controller.getHallManager(hallManager);
-			//controller.getHallOfResidence(hall); TODO may have to fix
+			controller.getHallOfResidence(getCurrentHal());
 
 			// Show the dialog and wait until the user closes it
 			dialogStage.showAndWait();
@@ -214,14 +253,17 @@ public class MainApp extends Application {
 			dialogStage.initOwner(primaryStage);
 			Scene scene = new Scene(page);
 			dialogStage.setScene(scene);
-
+			
+			//initialise lease
+			//c tempString = getCurrentHal().getName().charAt(0);
+			student.lease.setHallAdress(getCurrentHal().getAddress());
+			student.lease.setLeaseID( String.valueOf(getCurrentHal().getName().charAt(0)) + student.getStudentID());
 			// Set the person into the controller.
 			LeaseEditDialogController controller = loader.getController();
 			controller.setDialogStage(dialogStage);
 			controller.getStudent(student);
 			controller.getHallManager(hallManager);
-			//controller.getHallOfResidence(hall); TODO may need fix
-
+			
 			// Show the dialog and wait until the user closes it
 			dialogStage.showAndWait();
 
